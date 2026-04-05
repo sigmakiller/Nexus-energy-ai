@@ -10,15 +10,13 @@ venv/
 *.ipynb_checkpoints
 
 # ML models
-*.pkl
-*.keras
-*.h5
-*.pt
-*.pth
+# (Allowing trained models for deployment)
+# *.pkl
+# *.keras
 
 # Data files
-*.csv
-data/
+data/processed_data.csv
+data/Building_59_clean_data/
 
 # Logs
 *.log
