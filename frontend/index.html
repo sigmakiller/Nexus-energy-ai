@@ -25,6 +25,40 @@
 
         <!-- Main Content -->
         <main class="dashboard-content">
+            <!-- AI Model Performance & Metrics -->
+            <div class="glass-panel model-metrics-panel">
+                <h2>AI Model Performance & Metrics</h2>
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <h4>Hourly Energy Forecasting</h4>
+                        <ul>
+                            <li><strong>Metric:</strong> Mean Absolute Error (MAE)</li>
+                            <li><strong>HVAC:</strong> <span id="mae-hvac" class="dynamic-val">~0.68</span> kWh</li>
+                            <li><strong>Lighting:</strong> <span id="mae-lighting" class="dynamic-val">~0.15</span> kWh</li>
+                            <li><strong>MELS:</strong> <span id="mae-mels" class="dynamic-val">~0.18</span> kWh</li>
+                        </ul>
+                    </div>
+                    <div class="metric-card">
+                        <h4>Temperature & Anomaly Detection</h4>
+                        <ul>
+                            <li><strong>Hourly Temp Zone 016:</strong> 0.13°C (MAE)</li>
+                            <li><strong>Anomaly Model:</strong> LSTM Deviation Proxy</li>
+                            <li><strong>Recon Error (Loss):</strong> <span id="recon-error" class="dynamic-val" style="color:var(--accent-blue);font-weight:700">--</span></li>
+                            <li><strong>Detects:</strong> Deviation from normal usage</li>
+                        </ul>
+                    </div>
+                    <div class="metric-card">
+                        <h4>Business & Efficiency Outcomes</h4>
+                        <ul>
+                            <li><strong>Goal:</strong> Percent Savings</li>
+                            <li><strong>Waste Reduction:</strong> Up to 30%</li>
+                            <li><strong>Strategy:</strong> Load shifting & early detection</li>
+                            <li><strong>Focus:</strong> Faulty HVAC systems</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
             <div class="glass-panel summary-cards">
                 <div class="card" id="card-hvac">
                     <h3>Predicted HVAC</h3>

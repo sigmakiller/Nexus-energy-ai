@@ -38,7 +38,13 @@ from fastapi.staticfiles import StaticFiles
 def read_root():
     return FileResponse(os.path.join(BASE_DIR, "frontend", "index.html"))
 
-app.mount("/static", StaticFiles(directory=os.path.join(BASE_DIR, "frontend")), name="static")
+@app.get("/style.css")
+def get_style():
+    return FileResponse(os.path.join(BASE_DIR, "frontend", "style.css"))
+
+@app.get("/app.js")
+def get_app():
+    return FileResponse(os.path.join(BASE_DIR, "frontend", "app.js"))
 
 @app.websocket("/ws/stream")
 async def websocket_endpoint(websocket: WebSocket):
@@ -57,6 +63,10 @@ async def websocket_endpoint(websocket: WebSocket):
 
     start_idx = 0
     try:
+        # State variables for dynamic metrics
+        mae_accumulated = {"hvac": 0.0, "lighting": 0.0, "mels": 0.0}
+        prediction_count = 0
+
         while True:
             for i in range(start_idx, len(df)):
                 row = df.iloc[i]
@@ -74,14 +84,40 @@ async def websocket_endpoint(websocket: WebSocket):
                         "lighting": lighting,
                         "mels": mels
                     },
-                    "predicted": None
+                    "predicted": None,
+                    "metrics": None
                 }
                 
                 if prediction:
+                    pred_hvac = float(prediction['hvac_pred'])
+                    pred_lighting = float(prediction['lighting_pred'])
+                    pred_mels = float(prediction['mels_pred'])
+
                     payload["predicted"] = {
-                        "hvac": float(prediction['hvac_pred']),
-                        "lighting": float(prediction['lighting_pred']),
-                        "mels": float(prediction['mels_pred'])
+                        "hvac": pred_hvac,
+                        "lighting": pred_lighting,
+                        "mels": pred_mels
+                    }
+
+                    # Calculate Absolute Error for current step (proxy for Reconstruction Error)
+                    err_hvac = abs(hvac - pred_hvac)
+                    err_lighting = abs(lighting - pred_lighting)
+                    err_mels = abs(mels - pred_mels)
+                    reconstruction_error = err_hvac + err_lighting + err_mels
+                    
+                    # Update Running MAE
+                    prediction_count += 1
+                    mae_accumulated["hvac"] += err_hvac
+                    mae_accumulated["lighting"] += err_lighting
+                    mae_accumulated["mels"] += err_mels
+                    
+                    payload["metrics"] = {
+                        "reconstruction_error": reconstruction_error,
+                        "mae": {
+                            "hvac": mae_accumulated["hvac"] / prediction_count,
+                            "lighting": mae_accumulated["lighting"] / prediction_count,
+                            "mels": mae_accumulated["mels"] / prediction_count
+                        }
                     }
 
                 await websocket.send_json(payload)
@@ -91,3 +127,8 @@ async def websocket_endpoint(websocket: WebSocket):
         print("Client disconnected.")
     except Exception as e:
         print(f"WebSocket error: {e}")
+
+if __name__ == "__main__":
+    import uvicorn
+    # When run directly with `python main.py`, start the server on port 8000
+    uvicorn.run("main:app", host="127.0.0.1", port=8000, reload=True)

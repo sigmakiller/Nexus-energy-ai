@@ -7,6 +7,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const valMELS = document.getElementById("val-mels");
     const logStream = document.getElementById("log-stream");
 
+    // Dynamic Metric Elements
+    const maeHVAC = document.getElementById("mae-hvac");
+    const maeLighting = document.getElementById("mae-lighting");
+    const maeMELS = document.getElementById("mae-mels");
+    const reconError = document.getElementById("recon-error");
+
     // Initialize Chart.js
     const ctx = document.getElementById('energyChart').getContext('2d');
     
@@ -158,7 +164,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function processData(data) {
-        const { timestamp, actual, predicted } = data;
+        const { timestamp, actual, predicted, metrics } = data;
         
         // Format time 
         const date = new Date(timestamp);
@@ -187,6 +193,23 @@ document.addEventListener("DOMContentLoaded", () => {
             valHVAC.innerText = predicted.hvac.toFixed(2);
             valLighting.innerText = predicted.lighting.toFixed(2);
             valMELS.innerText = predicted.mels.toFixed(2);
+
+            if (metrics) {
+                maeHVAC.innerText = metrics.mae.hvac.toFixed(2);
+                maeLighting.innerText = metrics.mae.lighting.toFixed(2);
+                maeMELS.innerText = metrics.mae.mels.toFixed(2);
+                
+                reconError.innerText = metrics.reconstruction_error.toFixed(2);
+                
+                // Visual Alert for high anomaly
+                if (metrics.reconstruction_error > 1.5) {
+                    reconError.style.color = "#ef4444";
+                    reconError.style.textShadow = "0 0 10px rgba(239, 68, 68, 0.8)";
+                } else {
+                    reconError.style.color = "var(--accent-blue)";
+                    reconError.style.textShadow = "none";
+                }
+            }
             
             // Animate cards briefly
             animateValueChange(valHVAC);
