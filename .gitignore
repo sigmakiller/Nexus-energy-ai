@@ -1,25 +1,31 @@
-# Byte-compiled / optimized / DLL files
+# Python
 __pycache__/
-*.py[cod]
-*$py.class
+*.pyc
 
-# Temporary IDE files
-.vscode/
-.idea/
-
-# OS generated files
-.DS_Store
-Thumbs.db
-
-# Environments
-.env
-.venv
-env/
+# Virtual environment
 venv/
-ENV/
-env.bak/
-venv.bak/
+.env
+
+# Jupyter
+*.ipynb_checkpoints
+
+# ML models
+*.pkl
+*.keras
+*.h5
+*.pt
+*.pth
+
+# Data files
+*.csv
+data/
 
 # Logs
-logs/
 *.log
+
+# Node (frontend)
+node_modules/
+
+# OS files
+.DS_Store
+Thumbs.db
