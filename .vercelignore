@@ -1,0 +1,8 @@
+*.py
+*.pkl
+*.keras
+requirements.txt
+.python-version
+Procfile
+models/
+data/
