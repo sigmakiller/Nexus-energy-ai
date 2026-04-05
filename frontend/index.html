@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexus Energy AI</title>
+    <!-- Add SEO and general metadata -->
+    <meta name="description" content="AI-driven real-time energy prediction dashboard for commercial buildings.">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/style.css">
+    <!-- Chart.js for premium graphics -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar / Header -->
+        <header class="dashboard-header">
+            <h1 class="logo">Nexus Energy AI</h1>
+            <div class="status-indicator">
+                <span id="connection-dot" class="dot disconnected"></span>
+                <span id="connection-text">Disconnected</span>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="dashboard-content">
+            <div class="glass-panel summary-cards">
+                <div class="card" id="card-hvac">
+                    <h3>Predicted HVAC</h3>
+                    <div class="value" id="val-hvac">--</div>
+                    <div class="unit">kWh</div>
+                </div>
+                <div class="card" id="card-lighting">
+                    <h3>Predicted Lighting</h3>
+                    <div class="value" id="val-lighting">--</div>
+                    <div class="unit">kWh</div>
+                </div>
+                <div class="card" id="card-mels">
+                    <h3>Predicted MELS</h3>
+                    <div class="value" id="val-mels">--</div>
+                    <div class="unit">kWh</div>
+                </div>
+            </div>
+
+            <div class="glass-panel chart-container">
+                <div class="chart-header">
+                    <h2>Live Energy Forecast vs Actuals</h2>
+                </div>
+                <div class="chart-wrapper">
+                    <canvas id="energyChart"></canvas>
+                </div>
+            </div>
+            
+            <div class="glass-panel log-container">
+                <h3>System Streaming Log</h3>
+                <div class="log-stream" id="log-stream">
+                    <!-- Stream logs here -->
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="/static/app.js"></script>
+</body>
+</html>
