@@ -112,7 +112,7 @@ document.addEventListener("DOMContentLoaded", () => {
     
     // IMPORTANT: When hosting the frontend on Vercel, change this variable to your live backend URL!
     // Example: const PROD_WS_URL = "wss://my-nexus-backend.onrender.com/ws/stream";
-    const PROD_WS_URL = ""; 
+    const PROD_WS_URL = "wss://nexus-energy-ai.onrender.com/ws/stream"; 
 
     function connect() {
         let wsUrl;
