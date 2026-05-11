@@ -174,6 +174,67 @@ h2, .h2 {
     font-weight: 500;
 }
 
+/* Testimonial & Trust Styles */
+.testimonial-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.profile-photo {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.testimonial-meta {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.testimonial-name {
+    font-weight: 600;
+    color: var(--text-primary);
+    font-size: 0.95rem;
+}
+
+.testimonial-role {
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+}
+
+.company-logo {
+    height: 28px;
+    width: auto;
+    object-fit: contain;
+    opacity: 0.9;
+}
+
+.testimonial-metrics {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+}
+
+.stat-pill {
+    background: rgba(16, 185, 129, 0.1);
+    color: #10B981;
+    border: 1px solid rgba(16, 185, 129, 0.2);
+    padding: 0.5rem 0.75rem;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
 .summary-cards {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
