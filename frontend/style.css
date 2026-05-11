@@ -457,20 +457,17 @@ h2, .h2 {
 
 .hero-section {
     display: flex;
-    flex-direction: column;
     align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 10rem 4rem;
+    justify-content: space-between;
+    padding: 8rem 4rem;
     max-width: 1440px;
     margin: 0 auto;
+    gap: 4rem;
 }
 
 .hero-content {
-    max-width: 900px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    flex: 1;
+    max-width: 600px;
 }
 
 .hero-title {
@@ -492,8 +489,7 @@ h2, .h2 {
 
 .hero-cta {
     display: flex;
-    justify-content: center;
-    gap: 1.5rem;
+    gap: 1rem;
 }
 
 .btn-primary {
@@ -664,5 +660,67 @@ h2, .h2 {
     align-items: center;
     gap: 0.75rem;
     font-weight: 500;
+}
+
+/* Contributors Section */
+.contributors-section {
+    padding: 6rem 4rem;
+    background: transparent;
+    border-top: 1px solid rgba(255,255,255,0.05);
+}
+
+.contributors-container {
+    max-width: 1440px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.contributors-container h2 {
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
+}
+
+.contributors-grid {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    flex-wrap: wrap;
+}
+
+.contributor-card {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 16px;
+    padding: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    width: 280px;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.contributor-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(255,255,255,0.15);
+}
+
+.contributor-photo {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.contributor-info h3 {
+    font-size: 1.25rem;
+    margin-bottom: 0.25rem;
+    color: var(--text-primary);
+}
+
+.contributor-info p {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
 }
 
