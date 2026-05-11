@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexus AI - Workflow Automation</title>
+    
+    <!-- Basic Meta Tags -->
+    <meta name="description" content="AI-powered workflow automation platform for businesses.">
+    <meta name="author" content="Blesson T Abraham">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Nexus AI - Workflow Automation">
+    <meta property="og:description" content="AI-powered workflow automation platform for businesses.">
+    <meta property="og:image" content="https://github.com/sigmakiller.png">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Nexus AI - Workflow Automation">
+    <meta name="twitter:description" content="AI-powered workflow automation platform for businesses.">
+    <meta name="twitter:image" content="https://github.com/sigmakiller.png">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <!-- Chart.js for premium graphics -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar / Header -->
+        <header class="dashboard-header">
+            <h1 class="logo">Nexus Energy AI</h1>
+            <div class="status-indicator">
+                <span id="connection-dot" class="dot disconnected"></span>
+                <span id="connection-text">Disconnected</span>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="dashboard-content">
+            <!-- AI Model Performance & Metrics -->
+            <div class="glass-panel model-metrics-panel">
+                <h2>AI Model Performance & Metrics</h2>
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <h4>Hourly Energy Forecasting</h4>
+                        <ul>
+                            <li><strong>Metric:</strong> Mean Absolute Error (MAE)</li>
+                            <li><strong>HVAC:</strong> <span id="mae-hvac" class="dynamic-val">~0.68</span> kWh</li>
+                            <li><strong>Lighting:</strong> <span id="mae-lighting" class="dynamic-val">~0.15</span> kWh</li>
+                            <li><strong>MELS:</strong> <span id="mae-mels" class="dynamic-val">~0.18</span> kWh</li>
+                        </ul>
+                    </div>
+                    <div class="metric-card">
+                        <h4>Temperature & Anomaly Detection</h4>
+                        <ul>
+                            <li><strong>Hourly Temp Zone 016:</strong> 0.13°C (MAE)</li>
+                            <li><strong>Anomaly Model:</strong> LSTM Deviation Proxy</li>
+                            <li><strong>Recon Error (Loss):</strong> <span id="recon-error" class="dynamic-val" style="color:var(--accent-blue);font-weight:700">--</span></li>
+                            <li><strong>Detects:</strong> Deviation from normal usage</li>
+                        </ul>
+                    </div>
+                    <div class="metric-card testimonial-card">
+                        <div class="testimonial-header">
+                            <img src="https://github.com/sigmakiller.png" alt="Profile" class="profile-photo">
+                            <div class="testimonial-meta">
+                                <span class="testimonial-name">Blesson T Abraham</span>
+                                <span class="testimonial-role">Developer</span>
+                            </div>
+                            <svg viewBox="0 0 76 65" fill="none" xmlns="http://www.w3.org/2000/svg" class="company-logo" style="height: 22px; width: auto; opacity: 1;">
+                                <path d="M37.5274 0L75.0548 65H0L37.5274 0Z" fill="#ffffff"/>
+                            </svg>
+                        </div>
+                        <div class="testimonial-metrics">
+                            <div class="stat-pill">
+                                <span>↓</span> Reduced processing time by 63%
+                            </div>
+                            <div class="stat-pill">
+                                <span>⏱</span> Saved 20 hrs/week
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-panel summary-cards">
+                <div class="card popular-card" id="card-hvac">
+                    <div class="badge">Most Popular</div>
+                    <h3>Predicted HVAC</h3>
+                    <div class="value" id="val-hvac">--</div>
+                    <div class="unit">kWh</div>
+                </div>
+                <div class="card" id="card-lighting">
+                    <h3>Predicted Lighting</h3>
+                    <div class="value" id="val-lighting">--</div>
+                    <div class="unit">kWh</div>
+                </div>
+                <div class="card" id="card-mels">
+                    <h3>Predicted MELS</h3>
+                    <div class="value" id="val-mels">--</div>
+                    <div class="unit">kWh</div>
+                </div>
+            </div>
+
+            <div class="glass-panel chart-container">
+                <div class="chart-header">
+                    <h2>Live Energy Forecast vs Actuals</h2>
+                </div>
+                <div class="chart-wrapper">
+                    <canvas id="energyChart"></canvas>
+                </div>
+            </div>
+            
+            <div class="glass-panel log-container">
+                <h3>System Streaming Log</h3>
+                <div class="log-stream" id="log-stream">
+                    <!-- Stream logs here -->
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
