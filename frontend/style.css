@@ -1029,6 +1029,34 @@ h2, .h2 {
     justify-content: center;
     color: var(--grid-line);
     padding: 0.5rem 0;
+    transition: color 0.2s steps(2);
+}
+
+/* Animation states for pipeline sequence */
+.pipeline-step.active {
+    border-color: var(--accent-neon);
+    background: rgba(0, 240, 255, 0.05);
+    box-shadow: 0 0 20px rgba(0, 240, 255, 0.1) inset;
+}
+.pipeline-step.active .step-num {
+    color: #fff;
+    text-shadow: 0 0 10px var(--accent-neon);
+}
+.pipeline-step.active h4 {
+    color: var(--accent-neon);
+}
+
+.pipeline-connector.active {
+    color: var(--accent-neon);
+}
+.pipeline-connector.active svg {
+    filter: drop-shadow(0 0 5px var(--accent-neon));
+    animation: flowPulse 0.5s infinite steps(2);
+}
+
+@keyframes flowPulse {
+    0% { opacity: 0.5; transform: translateY(-2px); }
+    100% { opacity: 1; transform: translateY(2px); }
 }
 
 @media (min-width: 1024px) {

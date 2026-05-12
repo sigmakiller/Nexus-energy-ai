@@ -292,6 +292,47 @@
 
             startHealthCheck();
         });
+
+        // Pipeline Animation Sequencer
+        document.addEventListener("DOMContentLoaded", () => {
+            const steps = document.querySelectorAll('.pipeline-step');
+            const connectors = document.querySelectorAll('.pipeline-connector');
+            
+            if (steps.length === 0) return;
+
+            let currentIndex = 0;
+            const stepDuration = 1500; // 1.5 seconds per step
+
+            function animatePipeline() {
+                // Clear all active states
+                steps.forEach(step => step.classList.remove('active'));
+                connectors.forEach(conn => conn.classList.remove('active'));
+
+                // Activate current step
+                steps[currentIndex].classList.add('active');
+
+                // Activate the connector going INTO the next step
+                if (currentIndex < steps.length - 1 && connectors[currentIndex]) {
+                    connectors[currentIndex].classList.add('active');
+                }
+
+                // Move to next step
+                currentIndex++;
+                
+                // If we reached the end, hold for a moment then reset
+                if (currentIndex >= steps.length) {
+                    setTimeout(() => {
+                        currentIndex = 0;
+                        animatePipeline();
+                    }, stepDuration * 2);
+                } else {
+                    setTimeout(animatePipeline, stepDuration);
+                }
+            }
+
+            // Start loop
+            setTimeout(animatePipeline, 1000);
+        });
     </script>
 </body>
 
