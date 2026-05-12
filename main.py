@@ -34,6 +34,10 @@ from fastapi.staticfiles import StaticFiles
 
 # ...
 
+@app.get("/health")
+def health_check():
+    return {"status": "active"}
+
 @app.get("/")
 def read_root():
     return FileResponse(os.path.join(BASE_DIR, "frontend", "index.html"))

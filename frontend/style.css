@@ -748,15 +748,35 @@ h2, .h2 {
     width: 8px;
     height: 8px;
     border-radius: 50%;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.status-dot.active {
     background-color: var(--accent-teal);
     box-shadow: 0 0 10px var(--accent-teal);
     animation: statusPulse 2s infinite ease-in-out;
+}
+
+.status-dot.waking {
+    background-color: #f59e0b; /* Amber */
+    box-shadow: 0 0 10px #f59e0b;
+    animation: wakingPulse 1s infinite alternate;
+}
+
+.status-dot.offline {
+    background-color: #ef4444; /* Red */
+    box-shadow: 0 0 10px #ef4444;
 }
 
 @keyframes statusPulse {
     0% { transform: scale(1); opacity: 1; box-shadow: 0 0 10px var(--accent-teal); }
     50% { transform: scale(1.5); opacity: 0.5; box-shadow: 0 0 20px var(--accent-teal); }
     100% { transform: scale(1); opacity: 1; box-shadow: 0 0 10px var(--accent-teal); }
+}
+
+@keyframes wakingPulse {
+    0% { opacity: 0.4; transform: scale(1); }
+    100% { opacity: 1; transform: scale(1.2); }
 }
 
 .counter-box {

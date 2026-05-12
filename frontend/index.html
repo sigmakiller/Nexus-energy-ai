@@ -57,9 +57,9 @@
                 <div class="workflow-container">
                     <!-- Live Status & Counter Header -->
                     <div class="workflow-header">
-                        <div class="live-status">
-                            <span class="status-dot"></span>
-                            Agent Active
+                        <div class="live-status" id="agent-status-container">
+                            <span class="status-dot waking" id="agent-status-dot"></span>
+                            <span id="agent-status-text">Agent Waking Up...</span>
                         </div>
                         <div class="counter-box">
                             <span class="counter-label">Tasks Automated</span>
@@ -159,6 +159,46 @@
                     counter.innerText = Math.floor(current).toLocaleString();
                 }, interval);
             }
+        });
+        // Health Check polling logic
+        document.addEventListener("DOMContentLoaded", () => {
+            const statusDot = document.getElementById("agent-status-dot");
+            const statusText = document.getElementById("agent-status-text");
+
+            async function checkHealth() {
+                try {
+                    const response = await fetch('/health');
+                    if (response.ok) {
+                        statusDot.className = "status-dot active";
+                        statusText.innerText = "Agent Active";
+                        return true;
+                    }
+                } catch (error) {
+                    // Endpoint unreachable yet
+                }
+                return false;
+            }
+
+            async function startHealthCheck() {
+                let attempts = 0;
+                const maxAttempts = 60; // Up to 2 minutes
+
+                const poll = setInterval(async () => {
+                    const isAlive = await checkHealth();
+                    if (isAlive) {
+                        clearInterval(poll);
+                    } else {
+                        attempts++;
+                        if (attempts >= maxAttempts) {
+                            clearInterval(poll);
+                            statusDot.className = "status-dot offline";
+                            statusText.innerText = "Agent Offline";
+                        }
+                    }
+                }, 2000);
+            }
+
+            startHealthCheck();
         });
     </script>
 </body>
