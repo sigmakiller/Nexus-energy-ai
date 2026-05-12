@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const valHVAC = document.getElementById("val-hvac");
     const valLighting = document.getElementById("val-lighting");
     const valMELS = document.getElementById("val-mels");
+    const valConfidence = document.getElementById("val-confidence");
     const logStream = document.getElementById("log-stream");
 
     // Dynamic Metric Elements
@@ -136,14 +137,14 @@ document.addEventListener("DOMContentLoaded", () => {
         ws.onopen = () => {
             dot.className = "dot connected";
             text.textContent = "Live Stream Connected";
-            addLog("SYSTEM", "WebSocket Connection Established.");
+            addLog("SYSTEM", "INFO", "WebSocket Connection Established.");
         };
 
         ws.onmessage = (event) => {
             const data = JSON.parse(event.data);
             
             if (data.error) {
-                addLog("ERROR", data.error);
+                addLog("SYSTEM", "ERROR", data.error);
                 return;
             }
 
@@ -153,7 +154,7 @@ document.addEventListener("DOMContentLoaded", () => {
         ws.onclose = () => {
             dot.className = "dot disconnected";
             text.textContent = "Disconnected - Reconnecting...";
-            addLog("SYSTEM", "WebSocket Disconnected. Reconnecting in 3s...");
+            addLog("SYSTEM", "ERROR", "WebSocket Disconnected. Reconnecting in 3s...");
             setTimeout(connect, 3000);
         };
         
@@ -201,6 +202,19 @@ document.addEventListener("DOMContentLoaded", () => {
                 
                 reconError.innerText = metrics.reconstruction_error.toFixed(2);
                 
+                // Calculate Pseudo-Confidence Score
+                // Inverse relationship with recon error (assuming normal error is < 1.0)
+                let conf = Math.max(0, Math.min(100, 100 - (metrics.reconstruction_error * 15)));
+                if (valConfidence) {
+                    valConfidence.innerText = conf.toFixed(1);
+                    if (conf < 80) {
+                        valConfidence.style.color = "var(--accent-alert)";
+                    } else {
+                        valConfidence.style.color = "var(--accent-neon)";
+                    }
+                    animateValueChange(valConfidence);
+                }
+                
                 // Visual Alert for high anomaly
                 if (metrics.reconstruction_error > 1.5) {
                     reconError.style.color = "#ef4444";
@@ -216,14 +230,26 @@ document.addEventListener("DOMContentLoaded", () => {
             animateValueChange(valLighting);
             animateValueChange(valMELS);
             
-            addLog(timeLabel, `ACTUAL: [H:${actual.hvac.toFixed(1)} L:${actual.lighting.toFixed(1)} M:${actual.mels.toFixed(1)}] | PRED: [H:${predicted.hvac.toFixed(1)} L:${predicted.lighting.toFixed(1)} M:${predicted.mels.toFixed(1)}]`);
+            // Simulate Execution Trace
+            addLog(timeLabel, "TRACE", `Ingesting sequence tensor (1, 8, 3)...`);
+            setTimeout(() => {
+                addLog(timeLabel, "INFO", `Running LSTM forward pass...`);
+            }, 50);
+            setTimeout(() => {
+                const confText = valConfidence ? valConfidence.innerText : '99.9';
+                addLog(timeLabel, "METRIC", `Confidence Score generated: ${confText}%`);
+            }, 100);
+            setTimeout(() => {
+                addLog(timeLabel, "OUTPUT", `ACTUAL: [H:${actual.hvac.toFixed(1)} L:${actual.lighting.toFixed(1)} M:${actual.mels.toFixed(1)}] | PRED: [H:${predicted.hvac.toFixed(1)} L:${predicted.lighting.toFixed(1)} M:${predicted.mels.toFixed(1)}]`);
+            }, 150);
+            
         } else {
             // Null preds if buffering
             chartData.datasets[1].data.push(null);
             chartData.datasets[3].data.push(null);
             chartData.datasets[5].data.push(null);
             
-            addLog(timeLabel, `Buffering sequence...  [H:${actual.hvac.toFixed(1)} L:${actual.lighting.toFixed(1)} M:${actual.mels.toFixed(1)}]`);
+            addLog(timeLabel, "INFO", `Buffering sequence...  [H:${actual.hvac.toFixed(1)} L:${actual.lighting.toFixed(1)} M:${actual.mels.toFixed(1)}]`);
         }
 
         // Shift old data if exceeding max points
@@ -235,10 +261,11 @@ document.addEventListener("DOMContentLoaded", () => {
         energyChart.update('none'); // Update without full animation for performance
     }
 
-    function addLog(time, message) {
+    function addLog(time, type, message) {
         const entry = document.createElement("div");
         entry.className = "log-entry";
-        entry.innerHTML = `<span class="log-time">${time}</span><span class="log-data">${message}</span>`;
+        const typeClass = type.toLowerCase();
+        entry.innerHTML = `<span class="log-time">[${time}]</span><span class="log-type ${typeClass}">[${type}]</span><span class="log-data">${message}</span>`;
         logStream.appendChild(entry);
         
         // Auto scroll to bottom
