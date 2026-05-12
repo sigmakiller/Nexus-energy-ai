@@ -51,6 +51,45 @@
                     <a href="#about" class="btn-secondary">Learn More</a>
                 </div>
             </div>
+
+            <!-- Workflow Builder Visual -->
+            <div class="hero-visual">
+                <div class="workflow-container">
+                    <!-- Live Status & Counter Header -->
+                    <div class="workflow-header">
+                        <div class="live-status">
+                            <span class="status-dot"></span>
+                            Agent Active
+                        </div>
+                        <div class="counter-box">
+                            <span class="counter-label">Tasks Automated</span>
+                            <span class="counter-value" id="task-counter">0</span>
+                        </div>
+                    </div>
+
+                    <!-- Node Graph -->
+                    <div class="node-graph">
+                        <div class="node node-input">
+                            <div class="node-icon">📊</div>
+                            <div class="node-text">Data Streams</div>
+                        </div>
+                        
+                        <div class="node-path"></div>
+                        
+                        <div class="node node-ai">
+                            <div class="node-icon pulse">🧠</div>
+                            <div class="node-text">Nexus LSTM Model</div>
+                        </div>
+                        
+                        <div class="node-path"></div>
+                        
+                        <div class="node node-output">
+                            <div class="node-icon">⚡</div>
+                            <div class="node-text">Actionable Savings</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </section>
 
         <!-- About Section -->
@@ -82,7 +121,7 @@
                         <img src="https://github.com/sigmakiller.png" alt="Blesson T Abraham" class="contributor-photo">
                         <div class="contributor-info">
                             <h3>Blesson T Abraham</h3>
-                            <p>Developer</p>
+                            <p>Frontend Developer</p>
                         </div>
                     </div>
                     <div class="contributor-card">
@@ -91,13 +130,37 @@
                             JM</div>
                         <div class="contributor-info">
                             <h3>Jayesh Mandal</h3>
-                            <p>Developer</p>
+                            <p>Backend Developer</p>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
     </main>
+
+    <script>
+        // Number Counter Animation
+        document.addEventListener("DOMContentLoaded", () => {
+            const counter = document.getElementById("task-counter");
+            if(counter) {
+                const target = 24592;
+                const duration = 2500; // ms
+                const interval = 20; // ms
+                const steps = duration / interval;
+                const increment = target / steps;
+                let current = 0;
+                
+                const timer = setInterval(() => {
+                    current += increment;
+                    if(current >= target) {
+                        current = target;
+                        clearInterval(timer);
+                    }
+                    counter.innerText = Math.floor(current).toLocaleString();
+                }, interval);
+            }
+        });
+    </script>
 </body>
 
 </html>

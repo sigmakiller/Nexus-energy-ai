@@ -457,20 +457,17 @@ h2, .h2 {
 
 .hero-section {
     display: flex;
-    flex-direction: column;
     align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 10rem 4rem;
+    justify-content: space-between;
+    padding: 8rem 4rem;
     max-width: 1440px;
     margin: 0 auto;
+    gap: 4rem;
 }
 
 .hero-content {
-    max-width: 900px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    flex: 1;
+    max-width: 600px;
 }
 
 .hero-title {
@@ -492,8 +489,7 @@ h2, .h2 {
 
 .hero-cta {
     display: flex;
-    justify-content: center;
-    gap: 1.5rem;
+    gap: 1rem;
 }
 
 .btn-primary {
@@ -701,12 +697,162 @@ h2, .h2 {
     align-items: center;
     gap: 1.5rem;
     width: 280px;
-    transition: transform 0.2s ease, border-color 0.2s ease;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .contributor-card:hover {
-    transform: translateY(-4px);
-    border-color: rgba(255,255,255,0.15);
+    transform: translateY(-8px) scale(1.02);
+    border-color: rgba(139, 92, 246, 0.4);
+    box-shadow: 0 10px 30px rgba(139, 92, 246, 0.15), inset 0 0 0 1px rgba(139, 92, 246, 0.2);
+}
+
+/* --- Workflow Builder Visuals --- */
+.hero-visual {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.workflow-container {
+    width: 100%;
+    max-width: 480px;
+    background: rgba(11, 14, 20, 0.8);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.workflow-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    padding-bottom: 1rem;
+}
+
+.live-status {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--accent-teal);
+    box-shadow: 0 0 10px var(--accent-teal);
+    animation: statusPulse 2s infinite ease-in-out;
+}
+
+@keyframes statusPulse {
+    0% { transform: scale(1); opacity: 1; box-shadow: 0 0 10px var(--accent-teal); }
+    50% { transform: scale(1.5); opacity: 0.5; box-shadow: 0 0 20px var(--accent-teal); }
+    100% { transform: scale(1); opacity: 1; box-shadow: 0 0 10px var(--accent-teal); }
+}
+
+.counter-box {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.counter-label {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.counter-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    background: linear-gradient(135deg, #fff, var(--accent-blue));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.node-graph {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.node {
+    width: 100%;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.node:hover {
+    transform: translateX(5px);
+    border-color: rgba(255,255,255,0.2);
+}
+
+.node-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.05);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+}
+
+.node-icon.pulse {
+    animation: iconPulse 3s infinite ease-in-out;
+}
+
+@keyframes iconPulse {
+    0% { background: rgba(139, 92, 246, 0.1); }
+    50% { background: rgba(139, 92, 246, 0.4); box-shadow: 0 0 15px rgba(139, 92, 246, 0.4); }
+    100% { background: rgba(139, 92, 246, 0.1); }
+}
+
+.node-text {
+    font-weight: 600;
+    font-size: 1.05rem;
+}
+
+.node-path {
+    width: 2px;
+    height: 30px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.1), rgba(255,255,255,0.3));
+    position: relative;
+    overflow: hidden;
+}
+
+.node-path::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 10px;
+    background: var(--accent-blue);
+    animation: pathFlow 2s infinite linear;
+}
+
+@keyframes pathFlow {
+    0% { transform: translateY(-10px); opacity: 0; }
+    20% { opacity: 1; }
+    80% { opacity: 1; }
+    100% { transform: translateY(30px); opacity: 0; }
 }
 
 .contributor-photo {
